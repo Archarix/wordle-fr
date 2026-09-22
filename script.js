@@ -22,6 +22,7 @@ let currentGuess = "";
 let gameOver = false;
 let rows = [];
 let keyStates = {};
+const VALID_WORDS = new Set(FIVE_LETTER_WORDS);
 
 function pickWord() {
   const pool = FIVE_LETTER_WORDS;
@@ -115,6 +116,11 @@ function shakeRow() {
 function submitGuess() {
   if (currentGuess.length < WORD_LEN) {
     setMessage("Pas assez de lettres", 1200);
+    shakeRow();
+    return;
+  }
+  if (!VALID_WORDS.has(currentGuess)) {
+    setMessage("Mot inconnu", 1200);
     shakeRow();
     return;
   }
