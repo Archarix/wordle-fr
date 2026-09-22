@@ -7,8 +7,25 @@ const messageEl = document.getElementById("message");
 const overlayEl = document.getElementById("overlay");
 const overlayTitle = document.getElementById("overlayTitle");
 const overlayText = document.getElementById("overlayText");
+const statsTextEl = document.getElementById("statsText");
 const overlayBtn = document.getElementById("overlayBtn");
 const newGameBtn = document.getElementById("newGameBtn");
+
+const STATS_KEY = "wordle-fr-stats";
+
+function loadStats() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STATS_KEY));
+    if (saved) return saved;
+  } catch (e) {}
+  return { played: 0, wins: 0, currentStreak: 0, maxStreak: 0 };
+}
+
+function saveStats(stats) {
+  try {
+    localStorage.setItem(STATS_KEY, JSON.stringify(stats));
+  } catch (e) {}
+}
 
 const AZERTY = [
   ["A","Z","E","R","T","Y","U","I","O","P"],
@@ -191,6 +208,16 @@ function updateKeyboardStates(guess, result) {
 
 function endGame(won) {
   gameOver = true;
+  const stats = loadStats();
+  stats.played++;
+  if (won) {
+    stats.wins++;
+    stats.currentStreak++;
+    stats.maxStreak = Math.max(stats.maxStreak, stats.currentStreak);
+  } else {
+    stats.currentStreak = 0;
+  }
+  saveStats(stats);
   setTimeout(() => {
     overlayEl.classList.remove("hidden");
     if (won) {
@@ -200,6 +227,7 @@ function endGame(won) {
       overlayTitle.textContent = "😢 Dommage";
       overlayText.textContent = `Le mot était "${targetWord}".`;
     }
+    statsTextEl.textContent = `Parties : ${stats.played} · Victoires : ${stats.wins} · Série en cours : ${stats.currentStreak} · Meilleure série : ${stats.maxStreak}`;
   }, 400);
 }
 

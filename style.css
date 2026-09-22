@@ -186,6 +186,11 @@ h1 span {
   max-width: 320px;
 }
 .overlay-card h2 { margin-top: 0; }
+.overlay-card .stats {
+  margin-top: 10px;
+  font-size: 0.8rem;
+  color: #9a9a9a;
+}
 .overlay-card button {
   margin-top: 14px;
   background: var(--green);
