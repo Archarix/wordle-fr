@@ -1,0 +1,204 @@
+:root {
+  --bg: #121213;
+  --panel: #1a1a1b;
+  --border: #3a3a3c;
+  --border-filled: #565758;
+  --text: #ffffff;
+  --green: #538d4e;
+  --yellow: #b59f3b;
+  --grey: #3a3a3c;
+  --accent: #538d4e;
+  --radius: 6px;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  user-select: none;
+}
+
+header {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+}
+
+h1 {
+  font-size: 1.4rem;
+  letter-spacing: 2px;
+  margin: 0;
+}
+h1 span {
+  color: var(--green);
+  margin-left: 6px;
+}
+
+#newGameBtn {
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--border-filled);
+  border-radius: var(--radius);
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+#newGameBtn:hover { background: var(--border); }
+
+.message {
+  min-height: 24px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+#board {
+  display: grid;
+  grid-template-rows: repeat(6, 1fr);
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: repeat(var(--word-len, 5), 1fr);
+  gap: 6px;
+}
+
+.tile {
+  width: 52px;
+  height: 52px;
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-radius: 4px;
+  transition: transform 0.15s ease;
+}
+
+.tile.filled {
+  border-color: var(--border-filled);
+}
+
+.tile.pop {
+  animation: pop 0.1s ease;
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+.tile.flip {
+  animation: flip 0.5s ease forwards;
+}
+
+@keyframes flip {
+  0% { transform: rotateX(0deg); }
+  50% { transform: rotateX(90deg); }
+  51% { transform: rotateX(90deg); }
+  100% { transform: rotateX(0deg); }
+}
+
+.tile.correct { background: var(--green); border-color: var(--green); }
+.tile.present { background: var(--yellow); border-color: var(--yellow); }
+.tile.absent { background: var(--grey); border-color: var(--grey); }
+
+.tile.shake {
+  animation: shake 0.4s ease;
+}
+@keyframes shake {
+  10%, 90% { transform: translateX(-2px); }
+  20%, 80% { transform: translateX(4px); }
+  30%, 50%, 70% { transform: translateX(-6px); }
+  40%, 60% { transform: translateX(6px); }
+}
+
+#keyboard {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+  max-width: 500px;
+}
+
+.kb-row {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.key {
+  background: #818384;
+  color: var(--text);
+  border: none;
+  border-radius: 4px;
+  padding: 12px 0;
+  flex: 1;
+  max-width: 40px;
+  font-weight: bold;
+  font-size: 0.85rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background 0.15s ease;
+}
+.key:hover { filter: brightness(1.1); }
+.key.wide { max-width: 62px; font-size: 0.7rem; }
+
+.key.correct { background: var(--green); }
+.key.present { background: var(--yellow); }
+.key.absent { background: #3a3a3c; color: #888; }
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+.overlay.hidden { display: none; }
+
+.overlay-card {
+  background: var(--panel);
+  border: 1px solid var(--border-filled);
+  border-radius: 10px;
+  padding: 28px;
+  text-align: center;
+  max-width: 320px;
+}
+.overlay-card h2 { margin-top: 0; }
+.overlay-card button {
+  margin-top: 14px;
+  background: var(--green);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-weight: bold;
+}
+.overlay-card button:hover { filter: brightness(1.1); }
+
+@media (max-width: 400px) {
+  .tile { width: 42px; height: 42px; font-size: 1.4rem; }
+  .key { padding: 10px 0; font-size: 0.75rem; }
+}
