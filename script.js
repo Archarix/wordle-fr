@@ -207,7 +207,6 @@ function newGame() {
   overlayEl.classList.add("hidden");
   buildBoard();
   buildKeyboard();
-  console.log("Mot à deviner (debug):", targetWord);
 }
 
 document.addEventListener("keydown", (e) => {
