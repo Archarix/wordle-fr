@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Motus-like — Devine le mot</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>🟩 DEVINE<span>LE MOT</span></h1>
+    <button id="newGameBtn" title="Nouvelle partie">🔄 Nouveau</button>
+  </header>
+
+  <div id="message" class="message"></div>
+
+  <main id="board" aria-label="Grille de jeu"></main>
+
+  <div id="keyboard" aria-label="Clavier virtuel"></div>
+
+  <div id="overlay" class="overlay hidden">
+    <div class="overlay-card">
+      <h2 id="overlayTitle"></h2>
+      <p id="overlayText"></p>
+      <button id="overlayBtn">Rejouer</button>
+    </div>
+  </div>
+
+  <script src="words.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
